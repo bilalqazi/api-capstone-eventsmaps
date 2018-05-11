@@ -68,8 +68,8 @@ function getDataFromApi(searchQuery, lat, lon) {
 function initMap(){
 
 	map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: searchLat, lng: searchLon},
-          zoom: 12
+        center: {lat: searchLat, lng: searchLon},
+        zoom: 12
     });
 };
 
@@ -80,9 +80,16 @@ function displayAndRenderData(data) {
 	for (let i=0; i < data.data.events.length; i++) {
 		let eachEvent = data.data.events[i];
 		let eachEventHtml = renderEvent(eachEvent);
+		let eachEventLat = data.data.events[i].venue.lat;
+		let eachEventLon = data.data.events[i].venue.lon;
 		eventsHtml += eachEventHtml;
 
+		console.log(eachEventLat, eachEventLon);
 
+		var marker = new google.maps.Marker({
+  			position: {lat: eachEventLat, lng: eachEventLon},
+  			map: map
+  		});
 
 	}
 	$('#js-results').html(eventsHtml);
