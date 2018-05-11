@@ -2,8 +2,12 @@
 <html>
 <head>
 	<title>API capstone</title>
+	<link href="main.css" type="text/css" rel="stylesheet">
 	<script src="https://code.jquery.com/jquery-3.3.1.js" type="text/javascript"></script>
 	<script src="script.js"></script>
+	<script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPy0e7dVS6hPQaHYgSHd6n7cSPkkwxZt0&callback=initMap">
+    </script>
 </head>
 <body>
 	<nav>
@@ -20,6 +24,9 @@
 				<button type="submit" id="js-submit">Search</button>
 			</fieldset>
 		</form>
+		<div id="map">
+
+		</div>
 		<div id="js-results">
 
 		</div>
