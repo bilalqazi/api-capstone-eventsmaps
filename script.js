@@ -59,10 +59,11 @@ function getDataFromApi(searchQuery, lat, lon) {
 		data: {
 			lat: searchLat,
 			lon: searchLon,
+			order: 'time',
+			page: 32,
 			radius: radius, 
 			text: searchQuery,
-			key: '501f552e7131947b686e2e3b1a149',
-			radius: 15
+			key: '501f552e7131947b686e2e3b1a149'
 		},
 		dataType: 'jsonp',
 		type: 'GET',
@@ -106,8 +107,14 @@ function displayAndRenderData(data) {
 	  			//infowindow.setContent(eachEvent.description);
 	  			//infowindow.open(map, this);
 	  		//});
-	  		var html = `<div class="infowindow"><h3>${eachEvent.name}</h3>
-			<h4>Description:</h4>${eachEvent.description}</div>`
+	  		var html = 
+	  			`<div class="infowindow">
+	  				<a href="#${eachEvent.name}">
+	  					<h3>${eachEvent.name}</h3>
+	  				</a>
+					<h4>Description:</h4>
+					${eachEvent.description}
+				</div>`
 			bindInfoWindow(marker, map, infowindow, html)
 		};
 		markersArray = localMarkersArray;
@@ -129,6 +136,9 @@ function bindInfoWindow(marker, map, inforwindow, html) {
 		map.panTo(marker.getPosition());
 		infowindow.setContent(html);
 		infowindow.open(map, this);
+		google.maps.event.addListener(map, "click", function(event) {
+		    infowindow.close();
+		});
 	});
 }
 
@@ -136,18 +146,20 @@ function bindInfoWindow(marker, map, inforwindow, html) {
 
 function renderEvent(eachEvent){
 	
-	let eachEventHtml = `
-		<div>
-			<h1>
-				Name: ${eachEvent.name}
-			</h1>
-			<p>Description:</p> 
-			${eachEvent.description}
-			<p>
+	let eachEventHtml = 
+		`<div class="results-div">
+			<a href="${eachEvent.link}" name="${eachEvent.name}">
+				<h1 class="results-title">${eachEvent.name}</h1>
+			</a>
+			<h2 class="results-datetime">
 				When: ${eachEvent.local_date} @ ${eachEvent.local_time}
-			</p>
-		</div>
-	`
+			</h2>
+			<div class="results-description">
+			${eachEvent.description}
+			</div>
+			<a href="#back-to-the-top"><p class="return">Return to the top</p></a>
+		</div>`
+
 	return eachEventHtml;
 }
 

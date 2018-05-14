@@ -1,9 +1,21 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+}
+
 #map {
    width: 80%;
    height: 500px;
    background-color: grey;
    margin-left: auto;
    margin-right: auto;
+   border-bottom: 1px solid black;
  }
 
 .infowindow {
@@ -23,5 +35,60 @@ form {
 	padding-bottom: 10px;
 	font-size: 44px;
 }
+
+#js-topics {
+	width: 30%
+}
+
+#js-location {
+	width: 30%
+}
+
+#js-submit {
+	width: 20%
+}
+
+.results-div {
+	border-bottom: 2px dashed black;
+}
+
+.results-title {
+	margin-top: 0px;
+	padding-top: 10px;
+	text-align: center;
+}
+
+.results-datetime {
+	text-align: center;
+}
+
+.results-description {
+	margin-left: 10%;
+	margin-right: 10%
+}
+
+.return {
+	margin-left: 10%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
