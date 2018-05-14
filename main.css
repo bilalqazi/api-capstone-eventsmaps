@@ -1,5 +1,27 @@
 #map {
-   width: 100%;
-   height: 400px;
+   width: 80%;
+   height: 500px;
    background-color: grey;
+   margin-left: auto;
+   margin-right: auto;
  }
+
+.infowindow {
+	max-height: 200px;
+}
+
+form {
+	text-align: center;
+}
+
+.title {
+	text-align: center;
+	background-color: #d00;
+	color: white;
+	margin: 0;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-size: 44px;
+}
+
+

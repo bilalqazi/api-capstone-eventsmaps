@@ -8,9 +8,15 @@ var map;
 
 var searchQuery;
 
+var radius;
+
 var searchLat;
 
 var searchLon;
+
+var infowindow;
+
+var markersArray = [];
 
 function setupQueryListener() {
 
@@ -19,14 +25,15 @@ function setupQueryListener() {
 
 		searchQuery = $('#js-topics').val();
 		const location = $('#js-location').val();
-		console.log(searchQuery, location);
+		radius = $('#js-radius').val();
+		console.log(searchQuery, location, radius);
 		geocodeLocation(location);
 	});
 };
 
 function geocodeLocation(location) {
 	console.log(location);
-	const settings1 = {
+	const settings = {
 		url: MAPS_SEARCH_URL,
 		data: {
 			address: location,
@@ -34,26 +41,25 @@ function geocodeLocation(location) {
 		},
 		dataType: 'json',
 		type: 'GET',
-		success: getLatAndLong
+		success: function(data) {
+			console.log(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng);
+			searchLat = data.results[0].geometry.location.lat;
+			searchLon = data.results[0].geometry.location.lng;
+			console.log(searchQuery, searchLat, searchLon);
+			getDataFromApi(searchQuery, searchLat, searchLon);
+		}
 	};
-	$.ajax(settings1);
-};
-
-function getLatAndLong(data) {
-	console.log(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng);
-	searchLat = data.results[0].geometry.location.lat;
-	searchLon = data.results[0].geometry.location.lng;
-	console.log(searchQuery, searchLat, searchLon);
-	getDataFromApi(searchQuery, searchLat, searchLon);
+	$.ajax(settings);
 };
 
 function getDataFromApi(searchQuery, lat, lon) {
-	
+	console.log(radius);
 	const settings = {
 		url: MEETUP_SEARCH_URL,
 		data: {
 			lat: searchLat,
 			lon: searchLon,
+			radius: radius, 
 			text: searchQuery,
 			key: '501f552e7131947b686e2e3b1a149',
 			radius: 15
@@ -77,23 +83,56 @@ function displayAndRenderData(data) {
 
 	initMap();
 	let eventsHtml = '';
+	var localMarkersArray = [];
 	for (let i=0; i < data.data.events.length; i++) {
 		let eachEvent = data.data.events[i];
 		let eachEventHtml = renderEvent(eachEvent);
-		let eachEventLat = data.data.events[i].venue.lat;
-		let eachEventLon = data.data.events[i].venue.lon;
-		eventsHtml += eachEventHtml;
+		
+		if (data.data.events[i].venue && data.data.events[i].venue.lat && data.data.events[i].venue.lat) {
+			let eachEventLat = data.data.events[i].venue.lat;
+			let eachEventLon = data.data.events[i].venue.lon;
+			eventsHtml += eachEventHtml;
 
-		console.log(eachEventLat, eachEventLon);
-
-		var marker = new google.maps.Marker({
-  			position: {lat: eachEventLat, lng: eachEventLon},
-  			map: map
-  		});
-
+			var marker = new google.maps.Marker({
+	  			position: {lat: eachEventLat, lng: eachEventLon},
+	  			map: map
+	  		});
+	  		localMarkersArray.push(marker);
+	  		infowindow = new google.maps.InfoWindow({
+	  			content: eachEvent.description
+	  		});
+	  		//google.maps.event.addListener(marker, 'click', function () {
+	  			
+	  			//infowindow.setContent(eachEvent.description);
+	  			//infowindow.open(map, this);
+	  		//});
+	  		var html = `<div class="infowindow"><h3>${eachEvent.name}</h3>
+			<h4>Description:</h4>${eachEvent.description}</div>`
+			bindInfoWindow(marker, map, infowindow, html)
+		};
+		markersArray = localMarkersArray;
+		centerMap();
 	}
 	$('#js-results').html(eventsHtml);
 };
+
+function centerMap() {
+	var bounds = new google.maps.LatLngBounds();
+	$.each(markersArray, function (index, marker) {
+		bounds.extend(marker.position);
+	});
+	map.fitBounds(bounds);
+};
+
+function bindInfoWindow(marker, map, inforwindow, html) {
+	marker.addListener('click', function() {
+		map.panTo(marker.getPosition());
+		infowindow.setContent(html);
+		infowindow.open(map, this);
+	});
+}
+
+
 
 function renderEvent(eachEvent){
 	
@@ -102,11 +141,11 @@ function renderEvent(eachEvent){
 			<h1>
 				Name: ${eachEvent.name}
 			</h1>
-			<!-- <p>Description:</p> 
+			<p>Description:</p> 
 			${eachEvent.description}
 			<p>
 				When: ${eachEvent.local_date} @ ${eachEvent.local_time}
-			</p> -->
+			</p>
 		</div>
 	`
 	return eachEventHtml;
