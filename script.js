@@ -76,7 +76,8 @@ function initMap(){
 
 	map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: searchLat, lng: searchLon},
-        zoom: 12
+        zoom: 12,
+        gestureHandling: 'greedy'
     });
 };
 
@@ -85,40 +86,44 @@ function displayAndRenderData(data) {
 	initMap();
 	let eventsHtml = '';
 	var localMarkersArray = [];
+	var eventMap = {};
 	for (let i=0; i < data.data.events.length; i++) {
 		let eachEvent = data.data.events[i];
 		let eachEventHtml = renderEvent(eachEvent);
-		
-		if (data.data.events[i].venue && data.data.events[i].venue.lat && data.data.events[i].venue.lat) {
-			let eachEventLat = data.data.events[i].venue.lat;
-			let eachEventLon = data.data.events[i].venue.lon;
-			eventsHtml += eachEventHtml;
+		if (!(eachEvent.name in eventMap)) {
+			eventMap[eachEvent.name] = 1
+			if (data.data.events[i].venue && data.data.events[i].venue.lat && data.data.events[i].venue.lat) {
+				let eachEventLat = data.data.events[i].venue.lat;
+				let eachEventLon = data.data.events[i].venue.lon;
+				eventsHtml += eachEventHtml;
 
-			var marker = new google.maps.Marker({
-	  			position: {lat: eachEventLat, lng: eachEventLon},
-	  			map: map
-	  		});
-	  		localMarkersArray.push(marker);
-	  		infowindow = new google.maps.InfoWindow({
-	  			content: eachEvent.description
-	  		});
-	  		//google.maps.event.addListener(marker, 'click', function () {
-	  			
-	  			//infowindow.setContent(eachEvent.description);
-	  			//infowindow.open(map, this);
-	  		//});
-	  		var html = 
-	  			`<div class="infowindow">
-	  				<a href="#${eachEvent.name}">
-	  					<h3>${eachEvent.name}</h3>
-	  				</a>
-					<h4>Description:</h4>
-					${eachEvent.description}
-				</div>`
-			bindInfoWindow(marker, map, infowindow, html)
-		};
-		markersArray = localMarkersArray;
-		centerMap();
+				var marker = new google.maps.Marker({
+		  			position: {lat: eachEventLat, lng: eachEventLon},
+		  			map: map,
+		  			label: `${i+1}`
+		  		});
+		  		localMarkersArray.push(marker);
+		  		infowindow = new google.maps.InfoWindow({
+		  			content: eachEvent.description
+		  		});
+		  		//google.maps.event.addListener(marker, 'click', function () {
+		  			
+		  			//infowindow.setContent(eachEvent.description);
+		  			//infowindow.open(map, this);
+		  		//});
+		  		var html = 
+		  			`<div class="infowindow">
+		  				<a href="#${eachEvent.name}">
+		  					<h3>${eachEvent.name}</h3>
+		  				</a>
+						<h4>Description:</h4>
+						${eachEvent.description}
+					</div>`
+				bindAndCloseInfoWindow(marker, map, infowindow, html)
+			};
+			markersArray = localMarkersArray;
+			centerMap();
+		}
 	}
 	$('#js-results').html(eventsHtml);
 };
@@ -131,28 +136,31 @@ function centerMap() {
 	map.fitBounds(bounds);
 };
 
-function bindInfoWindow(marker, map, inforwindow, html) {
+function bindAndCloseInfoWindow(marker, map, inforwindow, html) {
 	marker.addListener('click', function() {
 		map.panTo(marker.getPosition());
 		infowindow.setContent(html);
 		infowindow.open(map, this);
-		google.maps.event.addListener(map, "click", function(event) {
-		    infowindow.close();
-		});
 	});
-}
+	google.maps.event.addListener(map, "click", function(event) {
+		    infowindow.close();
+	});
+};
 
 
 
 function renderEvent(eachEvent){
-	
+	var epochTime = eachEvent.time
+	var d = new Date(epochTime);
+	//d.setUTCSeconds(epochTime);
+	var formattedDate = d.toLocaleDateString() + " @ " + d.toLocaleTimeString();
 	let eachEventHtml = 
 		`<div class="results-div">
 			<a href="${eachEvent.link}" name="${eachEvent.name}">
 				<h1 class="results-title">${eachEvent.name}</h1>
 			</a>
 			<h2 class="results-datetime">
-				When: ${eachEvent.local_date} @ ${eachEvent.local_time}
+				When: ${formattedDate}
 			</h2>
 			<div class="results-description">
 			${eachEvent.description}
