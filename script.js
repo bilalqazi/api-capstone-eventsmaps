@@ -156,7 +156,7 @@ function renderEvent(eachEvent){
 	var formattedDate = d.toLocaleDateString() + " @ " + d.toLocaleTimeString();
 	let eachEventHtml = 
 		`<div class="results-div">
-			<a href="${eachEvent.link}" name="${eachEvent.name}">
+			<a href="${eachEvent.link}" name="${eachEvent.name}" aria-label="${eachEvent.name}">
 				<h1 class="results-title">${eachEvent.name}</h1>
 			</a>
 			<h2 class="results-datetime">

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<title>API capstone</title>
 	<link href="main.css" type="text/css" rel="stylesheet">
@@ -21,16 +21,16 @@
 		<form id="js-form">
 			<fieldset>
 				<legend>Search Form</legend>
-				<input type="text" name="topics" id="js-topics" placeholder="Search topics">
-				<input type="text" name="location" id="js-location" placeholder="Location">
-				<input type="radius" name="radius" id="js-radius" placeholder="Max distance">
-				<button type="submit" id="js-submit">Search</button>
+				<label for="js-topics"><input type="text" name="topics" id="js-topics" aria-label="search topics" placeholder="Search topics"></label>
+				<label for="js-location"><input type="text" name="location" id="js-location" aria-label="search topics" placeholder="Location"></label>
+				<label for="js-radius"><input type="radius" name="radius" id="js-radius" aria-label="search topics" placeholder="Max distance"></label>
+				<label for="js-submit"><button type="submit" id="js-submit">Search</button></label>
 			</fieldset>
 		</form>
-		<div id="map">
+		<div lang="en" id="map">
 
 		</div>
-		<div id="js-results">
+		<div id="js-results" aria-live="polite">
 
 		</div>
 	</main>
