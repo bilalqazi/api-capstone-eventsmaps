@@ -26,6 +26,10 @@ form {
 	text-align: center;
 }
 
+select {
+	text-align-last: center;
+}
+
 .title {
 	text-align: center;
 	background-color: #d00;
