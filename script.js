@@ -26,13 +26,11 @@ function setupQueryListener() {
 		searchQuery = $('#js-topics').val();
 		const location = $('#js-location').val();
 		radius = $('#js-radius').val();
-		console.log(searchQuery, location, radius);
 		geocodeLocation(location);
 	});
 };
 
 function geocodeLocation(location) {
-	console.log(location);
 	const settings = {
 		url: MAPS_SEARCH_URL,
 		data: {
@@ -42,10 +40,8 @@ function geocodeLocation(location) {
 		dataType: 'json',
 		type: 'GET',
 		success: function(data) {
-			console.log(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng);
 			searchLat = data.results[0].geometry.location.lat;
 			searchLon = data.results[0].geometry.location.lng;
-			console.log(searchQuery, searchLat, searchLon);
 			getDataFromApi(searchQuery, searchLat, searchLon);
 		}
 	};
@@ -53,7 +49,6 @@ function geocodeLocation(location) {
 };
 
 function getDataFromApi(searchQuery, lat, lon) {
-	console.log(radius);
 	const settings = {
 		url: MEETUP_SEARCH_URL,
 		data: {
