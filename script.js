@@ -4,6 +4,9 @@ const MAPS_SEARCH_URL = 'https://maps.googleapis.com/maps/api/geocode/json';
 
 const MAPS_API_KEY = 'AIzaSyAPy0e7dVS6hPQaHYgSHd6n7cSPkkwxZt0';
 
+//endpoints and api key above
+//empty  variables below
+
 var map;
 
 var searchQuery;
@@ -18,7 +21,14 @@ var infowindow;
 
 var markersArray = [];
 
-function setupQueryListener() {
+//end of empty variables
+
+function setupQueryListener() { 
+
+//listens for click on submit
+//grabs values from form on click
+//creates variables
+//starts geocoding location
 
 	$('#js-form').submit(function(event){
 		event.preventDefault();
@@ -29,6 +39,10 @@ function setupQueryListener() {
 		geocodeLocation(location);
 	});
 };
+
+//function to take user input location and return lat/long values
+//lat/long values stored in empty variables from above
+//runs getDataFromApi as callback function
 
 function geocodeLocation(location) {
 	const settings = {
@@ -47,6 +61,9 @@ function geocodeLocation(location) {
 	};
 	$.ajax(settings);
 };
+
+//uses geocoded location to search meetup.com API for event data
+//runs displayAndRenderData as callback
 
 function getDataFromApi(searchQuery, lat, lon) {
 	const settings = {
@@ -67,6 +84,8 @@ function getDataFromApi(searchQuery, lat, lon) {
 	$.ajax(settings);
 };
 
+//initializes map
+
 function initMap(){
 
 	map = new google.maps.Map(document.getElementById('map'), {
@@ -75,6 +94,10 @@ function initMap(){
         gestureHandling: 'greedy'
     });
 };
+
+//calls function to create map
+//uses API data to create results that are displayed in infowindows
+//runs function to attach info to each marker
 
 function displayAndRenderData(data) {
 
@@ -101,11 +124,6 @@ function displayAndRenderData(data) {
 		  		infowindow = new google.maps.InfoWindow({
 		  			content: eachEvent.description
 		  		});
-		  		//google.maps.event.addListener(marker, 'click', function () {
-		  			
-		  			//infowindow.setContent(eachEvent.description);
-		  			//infowindow.open(map, this);
-		  		//});
 		  		var html = 
 		  			`<div class="infowindow">
 		  				<a href="#${eachEvent.name}">
@@ -123,6 +141,8 @@ function displayAndRenderData(data) {
 	$('#js-results').html(eventsHtml);
 };
 
+//centers map when user clicks on a marker
+
 function centerMap() {
 	var bounds = new google.maps.LatLngBounds();
 	$.each(markersArray, function (index, marker) {
@@ -130,6 +150,9 @@ function centerMap() {
 	});
 	map.fitBounds(bounds);
 };
+
+//attachs the infowindow to each marker as for loop is run
+//also adds functionality to close infowindow when user clicks outside the infowindow
 
 function bindAndCloseInfoWindow(marker, map, inforwindow, html) {
 	marker.addListener('click', function() {
@@ -142,7 +165,7 @@ function bindAndCloseInfoWindow(marker, map, inforwindow, html) {
 	});
 };
 
-
+//displays event data in the results section
 
 function renderEvent(eachEvent){
 	var epochTime = eachEvent.time
