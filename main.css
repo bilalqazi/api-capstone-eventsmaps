@@ -79,7 +79,7 @@ form {
 }
 
 @media only screen and (max-width:1024px){
-	input {
+	select, input, button {
 		height: 50px;
 	}
 	button {
@@ -88,7 +88,7 @@ form {
 }
 
 @media only screen and (max-width:768px) {
-	input {
+	select, input {
 		display: block;
 		text-align: center;
 		width: 80% !important;
