@@ -78,8 +78,31 @@ form {
 	margin-left: 10%;
 }
 
+@media only screen and (max-width:1024px){
+	input {
+		height: 50px;
+	}
+	button {
+		height: 50px;
+	}
+}
 
-
+@media only screen and (max-width:768px) {
+	input {
+		display: block;
+		text-align: center;
+		width: 80% !important;
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: 15px;
+	}
+	button {
+		width: 80% !important;
+	}
+	form {
+		text-align: center;
+	}
+}
 
 
 
