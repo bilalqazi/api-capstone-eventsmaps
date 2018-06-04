@@ -7,8 +7,8 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.js" type="text/javascript"></script>
 	<script src="script.js"></script>
 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPy0e7dVS6hPQaHYgSHd6n7cSPkkwxZt0"></script>
-</head>
-<body>
+</head> 
+<body id="background">
 	<nav class="navbar" role="navigation">
 		<a name="back-to-the-top">
 			<h1 class="title">
@@ -19,7 +19,7 @@
 	<main role="main">
 		<form id="js-form">
 			<fieldset>
-				<legend>Search Form</legend>
+				<legend>Find your next event here!</legend>
 				<label for="js-topics">
 					<select name="topics" id="js-topics" aria-label="search topics" placeholder="Search topics">
 						<option value="Arts">Arts</option>
@@ -49,16 +49,25 @@
 					</select>
 				</label>
 				<label for="js-location"><input type="text" name="location" id="js-location" aria-label="search topics" placeholder="Location"></label>
-				<label for="js-radius"><input type="radius" name="radius" id="js-radius" aria-label="search topics" placeholder="Max distance"></label>
+				<label for="js-radius"><input type="number" min="0" name="radius" id="js-radius" aria-label="search topics" placeholder="Max distance"></label>
 				<label for="js-submit"><button type="submit" id="js-submit">Search</button></label>
 			</fieldset>
 		</form>
-		<div lang="en" id="map">
+		<section id="js-mapsandresults"	>
+			
+		<div class="landing-box">
 
+			<p class="landing-info">Simply pick a category of meetup that interests you, type in your location, and enter the maximum distance you would like to travel (in miles!).
+			</p>
+			<p class="landing-info">
+				You'll receive a map of all the events with markers and information on each event.
+			</p>
+			<p class="landing-info">
+				This website is made possible by meetup.com and google.com APIs. All events are hosted on meetup.com and clicking on the events will take you to the events specific page on meetup.com
+			</p>
 		</div>
-		<div id="js-results" aria-live="polite">
 
-		</div>
+		</section>
 	</main>
 
 </body>

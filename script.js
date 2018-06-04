@@ -37,6 +37,7 @@ function setupQueryListener() {
 		const location = $('#js-location').val();
 		radius = $('#js-radius').val();
 		geocodeLocation(location);
+
 	});
 };
 
@@ -101,7 +102,14 @@ function initMap(){
 
 function displayAndRenderData(data) {
 
+	$('#js-mapsandresults').html(`
+		<div lang="en" id="map">
+		</div>
+		<div id="js-results" aria-live="polite">
+
+		</div>`);
 	initMap();
+	
 	let eventsHtml = '';
 	var localMarkersArray = [];
 	var eventMap = {};
@@ -138,6 +146,7 @@ function displayAndRenderData(data) {
 			centerMap();
 		}
 	}
+
 	$('#js-results').html(eventsHtml);
 };
 
@@ -167,13 +176,14 @@ function bindAndCloseInfoWindow(marker, map, inforwindow, html) {
 
 //displays event data in the results section
 
+
 function renderEvent(eachEvent){
 	var epochTime = eachEvent.time
 	var d = new Date(epochTime);
 	//d.setUTCSeconds(epochTime);
 	var formattedDate = d.toLocaleDateString() + " @ " + d.toLocaleTimeString();
 	let eachEventHtml = 
-		`<div class="results-div">
+		`<div class="results-div text-box">
 			<a href="${eachEvent.link}" name="${eachEvent.name}" aria-label="${eachEvent.name}">
 				<h1 class="results-title">${eachEvent.name}</h1>
 			</a>

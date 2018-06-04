@@ -7,12 +7,13 @@ body {
 	margin-right: 0px;
 	margin-bottom: 0px;
 	margin-left: 0px;
+	background-image: url("https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/8Ofcko1/big-group-of-young-people-chilling-out-and-relax-outside-on-a-sunny-but-also-windy-day_rsr0d2ivl_thumbnail-full08.png");
+	background-size: cover;
 }
 
 #map {
    width: 80%;
    height: 500px;
-   background-color: grey;
    margin-left: auto;
    margin-right: auto;
    border-bottom: 1px solid black;
@@ -26,18 +27,54 @@ form {
 	text-align: center;
 }
 
-select {
-	text-align-last: center;
+input, select {
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+button {
+	width: 100%;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #d00;
+}
+
+button:visited {
+    background-color: #f55;
+}
+
+button:hover {
+    background-color: #b00;
+}
+
+button:active {
+    background-color: #d00;
 }
 
 .title {
 	text-align: center;
-	background-color: #d00;
 	color: white;
 	margin: 0;
-	padding-top: 10px;
+	padding-top: 150px;
 	padding-bottom: 10px;
+	margin-bottom: 25px;
 	font-size: 44px;
+}
+
+fieldset {
+	border: 0 none;
+	font-size: 25px;
+	padding-bottom: 25px;
+	color: white;
 }
 
 #js-topics {
@@ -52,9 +89,18 @@ select {
 	width: 20%
 }
 
+.landing-info {
+	font-size: 30px;
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	font-weight: bold;
+	opacity: 0.9 !important;
+}
+
 .results-div {
-	border-bottom: 2px dashed black;
-	background-color: #dddddd;
+	border-bottom: 2px dashed #8b0000;
 	border-radius: 10px;
 	width: 80%;
 	margin-top: 10px;
@@ -71,15 +117,62 @@ select {
 
 .results-datetime {
 	text-align: center;
+	color: white;
 }
 
 .results-description {
 	margin-left: 10%;
 	margin-right: 10%
+	font-size: 15px;
 }
 
 .return {
 	margin-left: 10%;
+}
+
+p {
+	color: #fff;
+    text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+    font-size: 20px;
+}
+
+.landing-box {
+	width: 70%;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: black;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.results-box {
+	width: 70%;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: black;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+a {
+	color: #d00;
+}
+
+a:link {
+    color: #d00;
+}
+
+/* visited link */
+a:visited {
+    color: #f55;
+}
+
+/* mouse over link */
+a:hover {
+    color: #b00;
+}
+
+/* selected link */
+a:active {
+    color: #d00;
 }
 
 @media only screen and (max-width:1024px){
@@ -92,6 +185,9 @@ select {
 }
 
 @media only screen and (max-width:768px) {
+	.landing-box {
+		display: none;
+	}
 	select, input {
 		display: block;
 		text-align: center;
